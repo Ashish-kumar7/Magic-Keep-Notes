@@ -1,4 +1,4 @@
-console.log("Ashish project");
+//console.log("Ashish project");
 showfunction();
 
 let addBtn = document.getElementById("addBtn");
@@ -6,6 +6,8 @@ let addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", function (e) {
 
     let addtext = document.getElementById("addText");
+    let addtitle =document.getElementById("addTitle");
+
     let notesstr = localStorage.getItem("notes");
 
     if (notesstr == null) {
@@ -13,10 +15,16 @@ addBtn.addEventListener("click", function (e) {
     } else {
         notesobj = JSON.parse(notesstr);
     }
+    
+    let myobj={
+        title:addtitle.value,
+        text:addtext.value
+    }
 
-    notesobj.push(addtext.value);
+    notesobj.push(myobj);
     localStorage.setItem("notes", JSON.stringify(notesobj));
     addtext.value = "";
+    addtitle.value="";
 
     showfunction();
 })
@@ -34,8 +42,8 @@ function showfunction() {
         stringsample += `
             <div class="notecard my-2 mx-2 card" style="width: 18rem;">
             <div class="card-body">
-            <h5 class="card-title">Notes ${index +1}</h5>
-            <p class="card-text">${element}</p>
+            <h5 class="card-title">${element.title}</h5>
+            <p class="card-text">${element.text}</p>
             <button  class="btn btn-primary" id="deletebtn" onclick="deletenote(${index})">Delete</button>
             </div>
             </div> 
@@ -64,7 +72,7 @@ deleteall.addEventListener("click", deleteallnote);
 function deleteallnote() {
     if (confirm("Do you want to delte all??")) {
 
-        console.log("Aass1");
+       // console.log("Aass1");
         let notesstr = localStorage.getItem("notes");
         notesobj = JSON.parse(notesstr);
         notesobj.splice(0, notesobj.length);
